@@ -1,16 +1,23 @@
- *.dbConfig.conf
-
 # dependencies
-/node_modules
+api_credit_client/node_modules
+api_credit_client/.pnp
+api_credit_client/.pnp.js
+
+
+# testing
+api_credit_client/coverage
 
 # production
-/build
-
-# static files
-/static
-
-# migrations folder
-/api_credit_core/migrations
+api_credit_client/build
 
 # misc
-*.pyc
+api_credit_client/.DS_Store
+api_credit_client/.env.local
+api_credit_client/.env.development.local
+api_credit_client/.env.test.local
+api_credit_client/.env.production.local
+
+api_credit_client/npm-debug.log*
+api_credit_client/yarn-debug.log*
+api_credit_client/yarn-error.log*
+api_credit_client/firebase-debug.log*
