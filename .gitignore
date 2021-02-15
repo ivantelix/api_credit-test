@@ -1,0 +1,16 @@
+ *.dbConfig.conf
+
+# dependencies
+/node_modules
+
+# production
+/build
+
+# static files
+/static
+
+# migrations folder
+/api_credit_core/migrations
+
+# misc
+*.pyc
