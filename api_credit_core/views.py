@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Credit
-from .forms import CreditForm
+from .models import Credit, Client
+from .forms import CreditForm, ClientForm
+from django.db import IntegrityError
 
 # Credits methods API
 def show_credit(request):
@@ -9,24 +10,34 @@ def show_credit(request):
         pass
 
 def create_credit(request):
-    if request.method == 'POST':
-        credit_form = CreditForm(request.POST)
+    try:
+        if request.method == 'POST':
+            client_form = ClientForm(request.POST)
 
-        if credit_form.is_valid():
-            if float(request.POST['credit_amount']) <= 50000:
+            if client_form.is_valid():
+                client_form.save()
+
+            else:
+                return JsonResponse({'status': '400', 'message': 'Verifiy personal data fields'}, safe=False)
+
+            credit_form = CreditForm({
+                    'credit_amount': request.POST['credit_amount'],
+                    'comment': request.POST['comment'],
+                    'client': Client.objects.get(dni=request.POST['dni'])
+                })
+
+            if not credit_form.is_valid():
+                return JsonResponse({'status': '400', 'message': 'Verifiy credit amount field'}, safe=False)
+
+            else:
                 credit_form.save()
 
                 return JsonResponse({
                         'status': '201', 
                         'message': 'Successfully created credit'}, safe=False)
-            
-            else:
-                return JsonResponse({
-                    'status': '400', 
-                    'message': 'Credit amount exceded limit of $50.000,00'}, safe=False)
-
-        else:
-            return JsonResponse({'status': '400', 'message': 'Bad request'}, safe=False)
+                
+    except:
+        return JsonResponse({'status': '400', 'message': 'Bad request'}, safe=False)
 
 def update_credit(request):
     if request.method == 'PUT':
