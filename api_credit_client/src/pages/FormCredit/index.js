@@ -1,6 +1,6 @@
 
 import Page from 'material-ui-shell/lib/containers/Page'
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { useIntl } from 'react-intl'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -53,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
 const steps = ['Datos de Solicitud'];
 
 const FormCredit = () => {
+  useEffect(() => {
+    axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+    axios.defaults.xsrfCookieName = "csrftoken";
+  });
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [datos, setDatos] = useState({
@@ -75,7 +79,7 @@ const FormCredit = () => {
     setActiveStep(activeStep + 1);
 
     const config = {
-        headers: { 'content-type': 'multipart/form-data' }
+      headers: { 'content-type': 'multipart/form-data' }
     }
 
     axios.post('localhost:8000/credit/create/', datos, config)

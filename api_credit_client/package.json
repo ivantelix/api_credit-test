@@ -8,6 +8,7 @@
     "@material-ui/icons": "4.x",
     "axios": "^0.21.1",
     "base-shell": "1.x",
+    "django-react-csrftoken": "^1.0.4",
     "github-markdown-css": "4.x",
     "intl": "1.x",
     "intl-locales-supported": "1.x",
