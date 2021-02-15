@@ -70,14 +70,6 @@ const getMenuItems = (props) => {
   if (isAuthMenuOpen || !isAuthorised) {
     return [
       {
-        value: '/my_account',
-        primaryText: intl.formatMessage({
-          id: 'my_account',
-          defaultMessage: 'My Account',
-        }),
-        leftIcon: <AccountBoxIcon />,
-      },
-      {
         value: '/signin',
         onClick: isAuthorised
           ? () => {
@@ -97,104 +89,16 @@ const getMenuItems = (props) => {
       value: '/home',
       visible: isAuthorised,
       primaryText: intl.formatMessage({ id: 'home' }),
-      leftIcon: <DashboardIcon />,
-    },
-    {
-      primaryText: intl.formatMessage({ id: 'demos', defaultMessage: 'Demos' }),
-      primaryTogglesNestedList: true,
       leftIcon: <Web />,
-      nestedItems: [
-        {
-          value: '/dialog_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'dialog_demo',
-            defaultMessage: 'Dialog',
-          }),
-          leftIcon: <ChatBubble />,
-        },
-        {
-          value: '/toast_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'toast_demo',
-            defaultMessage: 'Toast',
-          }),
-          leftIcon: <QuestionAnswer />,
-        },
-        {
-          value: '/filter_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'filter_demo',
-            defaultMessage: 'Filter',
-          }),
-          leftIcon: <FilterList />,
-        },
-        {
-          value: '/list_page_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'list_page_demo_menu',
-            defaultMessage: 'List Page',
-          }),
-          leftIcon: <ViewList />,
-        },
-        {
-          value: '/tabs_demo',
-          visible: isAuthorised,
-          primaryText: intl.formatMessage({
-            id: 'tabs_demo',
-            defaultMessage: 'Tabs Page',
-          }),
-          leftIcon: <Tab />,
-        },
-      ],
     },
     {
-      value: '/about',
-      visible: true,
-      primaryText: intl.formatMessage({ id: 'about' }),
-      leftIcon: <InfoOutlined />,
-    },
-    { divider: true },
-    {
-      primaryText: intl.formatMessage({ id: 'settings' }),
-      primaryTogglesNestedList: true,
-      leftIcon: <SettingsIcon />,
-      nestedItems: [
-        {
-          primaryText: intl.formatMessage({ id: 'theme' }),
-          secondaryText: intl.formatMessage({ id: themeID }),
-          primaryTogglesNestedList: true,
-          leftIcon: <StyleIcon />,
-          nestedItems: themeItems,
-        },
-        {
-          primaryText: intl.formatMessage({ id: 'language' }),
-          secondaryText: intl.formatMessage({ id: locale }),
-          primaryTogglesNestedList: true,
-          leftIcon: <LanguageIcon />,
-          nestedItems: localeItems,
-        },
-        {
-          visible: isDesktop ? true : false,
-          onClick: () => {toggleThis('isMiniSwitchVisibility')},
-          primaryText: intl.formatMessage({
-            id: 'menu_mini_mode',
-          }),
-          leftIcon: isMiniSwitchVisibility ? (
-            <MenuOpenIcon />
-          ) : (
-            <ChromeReaderMode />
-          ),
-        },
-        {
-          onClick: () => {toggleThisTheme('isRTL')},
-          primaryText: `${isRTL ? 'LTR' : 'RTL'} mode`,
-          leftIcon: isRTL ? <LTRIcon /> : <RTLIcon />,
-        },
-      ],
+      value: '/credit-request',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({
+        id: 'credit-request',
+        defaultMessage: 'Solicitud de Credito',
+      }),
+      leftIcon: <ViewList />,
     },
     {
       value: null,
