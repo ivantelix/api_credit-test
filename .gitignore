@@ -21,3 +21,6 @@ api_credit_client/npm-debug.log*
 api_credit_client/yarn-debug.log*
 api_credit_client/yarn-error.log*
 api_credit_client/firebase-debug.log*
+
+#pyc
+*.pyc
