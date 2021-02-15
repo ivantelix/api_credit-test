@@ -1,22 +1,17 @@
-import AppBar from '@material-ui/core/AppBar'
+
 import Page from 'material-ui-shell/lib/containers/Page'
 import React, { useState, Fragment } from 'react'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
 import { useIntl } from 'react-intl'
-
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import Review from './Review';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -55,25 +50,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Review your order'];
-
-const getStepContent = (step) => {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+const steps = ['Datos de Solicitud'];
 
 const FormCredit = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
+  const [datos, setDatos] = useState({
+    name: "",
+    lastname: "",
+    dni: null,
+    credit_amount: null,
+    comment: ""
+
+  });
+
+  const handleInputChange = (e) => {
+  setDatos({
+    ...datos,
+    [e.target.name]: e.target.value,
+  })
+}
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+
+    const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+    }
+
+    axios.post('localhost:8000/credit/create/', datos, config)
+      .then((response) => {
+        console.log('exito')
+      })
+      .catch((err) => {
+          console.error('No hemos podido generar su solicitud.');
+      });              
+
+
+    
+    console.log(datos)
   };
 
   const handleBack = () => {
@@ -113,7 +128,63 @@ const FormCredit = () => {
                 </Fragment>
               ) : (
                 <Fragment>
-                  {getStepContent(activeStep)}
+                    {
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              required
+                              id="name"
+                              name="name"
+                              label="Nombres"
+                              onChange={handleInputChange}
+                              fullWidth
+                              autoComplete="given-name"
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              required
+                              id="lastName"
+                              name="lastname"
+                              label="Apellidos"
+                              onChange={handleInputChange}
+                              fullWidth
+                              autoComplete="family-name"
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              required
+                              id="dni"
+                              name="dni"
+                              label="DNI"
+                              onChange={handleInputChange}
+                              fullWidth
+                              autoComplete="shipping address-level2"
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <TextField
+                              required
+                              id="credit_amount"
+                              name="credit_amount"
+                              label="Monto de credito"
+                              onChange={handleInputChange}
+                              fullWidth
+                              autoComplete="shipping postal-code"
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              id="comment"
+                              name="comment"
+                              label="Comentario"
+                              onChange={handleInputChange}
+                              fullWidth
+                            />
+                          </Grid>
+                        </Grid>
+                  }
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>
